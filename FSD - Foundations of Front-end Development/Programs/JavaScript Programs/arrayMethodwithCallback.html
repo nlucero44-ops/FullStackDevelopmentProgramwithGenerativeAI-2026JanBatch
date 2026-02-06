@@ -23,8 +23,13 @@
     // for(let value of num){
     //     document.write("<br/> value "+value)
     // }
-    document.write("<br/> display element using callback with for each")
-    num.forEach((v,i)=>document.write("<br/> value is "+v+"index "+i))
+    //document.write("<br/> display element using callback with for each")
+    //num.forEach((v,i)=>document.write("<br/> value is "+v+"index "+i))
+   // num.filter(v=>v%2==0).forEach(v=>document.write("<br/> even number "+v))
+   //num.map(v=>v+10).forEach(v=>document.writeln("<br/> value "+v))
+    let targetElement =10;
+    let result = num.find(v=>v==targetElement);  // if present return the value else return undefined 
+    document.writeln(result)
 </script>    
 </body>
 </html>
