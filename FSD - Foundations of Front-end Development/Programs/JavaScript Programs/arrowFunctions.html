@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let hello1 = function() {
+            document.write("<br> expression hello1 function")
+        }
+        hello1();
+        let hello2 = ()=>document.write("<br/> Arrow function")
+        hello2();
+        let addNumber1 = function(a,b){
+            let sum = a+b;
+            return sum;
+        }
+        document.write("<br/> sum using expression style "+addNumber1(1,2));
+        let addNumber2 = (a,b)=>a+b;
+        document.write("<br/> sum of two number using arrow"+addNumber2(1,2))
+    </script>
+</body>
+</html>
