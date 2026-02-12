@@ -14,7 +14,6 @@ let emp1 = {eid:1,ename:"Bob",age:21,skillSet:["Java","Python","JS"],
             {prid:1123,tech:"python"},
             {prid:1124,tech:"JS"}
         ]}
-
 document.write("<br/> Employee details")
 document.write("<br/> id is "+emp1.eid)
 document.write("<br/> Name is "+emp1.ename)
