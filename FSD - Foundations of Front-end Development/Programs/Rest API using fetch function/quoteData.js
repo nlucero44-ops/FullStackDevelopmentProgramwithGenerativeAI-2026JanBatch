@@ -11,4 +11,6 @@ fetch(`${URL}/${qid}`).then(response=>response.json()).then(result=>{
 
     document.getElementById("result").innerHTML=result.quote
 }).catch(error=>console.log(error))
+
+
 }
