@@ -8,16 +8,16 @@
 // //let data = 'abc'      // valid 0 to 9 
 // //let data = 'xyz'
 // let data = 'Abc'
+//let phonePatternData = /^\d{4}$/
+let phonePatternData = /^\d{10}$/i
+let phoneNumber = '1234567890'
 
-// let phonePatternData = /\d[10]/i
-// let phoneNumber = '1234567891'
-
-// console.log(phonePatternData.test(phoneNumber)) 
+console.log(phonePatternData.test(phoneNumber)) 
 
 // let pattern = /[abc]+/i             // start with a or b or c
 // let data = 'ag';
 // console.log(pattern.test(data))
 
-let emailIdPattern = /[a-z]+[0-9]+@[a-z]+[.]com/i
-let emailId = 'a1@b.com'
-console.log(emailIdPattern.test(emailId))
+// let emailIdPattern = /[a-z]+[0-9]+@[a-z]+[.]com/i
+// let emailId = 'a1@b.com'
+// console.log(emailIdPattern.test(emailId))
