@@ -10,19 +10,24 @@
     <h3>Login Page validation using JS</h3>
     <form action="home.html" method="post" onsubmit="return validation()">
         <label>EmailId</label>
-        <input type="text" name="emailId" id="emailId1"/><br/>
+        <input type="text" name="emailId" id="emailId1"/>
+        <span style="color:red" id="emailIdError"></span>
+        <br/>
         <label>Password</label>
-        <input type="password" name="pass" id="pass1"/><br/>
+        <input type="password" name="pass" id="pass1"/>
+        <span style="color:red" id="passwordError"></span>
+        <br/>
         <input type="submit" value="SignIn"/>
         <input type="reset" value="reset"/>
+        <span style="color:red" id="msg"></span>
     </form>
     <hr/>
     <h3>Login Page validation using HTML5</h3>
     <form action="home.html" method="post">
         <label>EmailId</label>
-        <input type="email" name="emailId" id="emailId2" required pattern="[a-z]+@[a-z]+[.]com"/><br/>
+        <input type="email" name="emailId" id="emailId2" required pattern="/[a-z]+@[a-z]+[.]com/"/><br/>
         <label>Password</label>
-        <input type="password" name="pass" id="pass2" required minlength="4"/><br/>
+        <input type="password" name="pass" id="pass2" required minlength=""/><br/>
         <input type="submit" value="SignIn"/>
         <input type="reset" value="reset"/>
     </form>
