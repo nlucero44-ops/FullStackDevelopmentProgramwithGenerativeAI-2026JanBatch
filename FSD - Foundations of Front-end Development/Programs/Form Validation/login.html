@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="formValidatation.js"></script>
+</head>
+<body>
+    <h3>Login Page validation using JS</h3>
+    <form action="home.html" method="post" onsubmit="return validation()">
+        <label>EmailId</label>
+        <input type="text" name="emailId" id="emailId1"/><br/>
+        <label>Password</label>
+        <input type="password" name="pass" id="pass1"/><br/>
+        <input type="submit" value="SignIn"/>
+        <input type="reset" value="reset"/>
+    </form>
+    <hr/>
+    <h3>Login Page validation using HTML5</h3>
+    <form action="home.html" method="post">
+        <label>EmailId</label>
+        <input type="email" name="emailId" id="emailId2"/><br/>
+        <label>Password</label>
+        <input type="password" name="pass" id="pass2"/><br/>
+        <input type="submit" value="SignIn"/>
+        <input type="reset" value="reset"/>
+    </form>
+</body>
+</html>
