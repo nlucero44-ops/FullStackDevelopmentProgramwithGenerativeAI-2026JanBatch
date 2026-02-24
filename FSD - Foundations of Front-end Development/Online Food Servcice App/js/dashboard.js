@@ -13,16 +13,17 @@ function logout() {
     window.location.href = "login.html"; // open login page. 
 }
 
-foodSelection.style.display = "flex"; // show food selection section
-cartSelection.style.display = "none"; // hide cart selection section    
+
+foodSelection.style.display = ""; // let Tailwind grid handle layout
+cartSelection.style.display = "none"; // hide cart selection section
 
 function showFoodSelection(){
-    foodSelection.style.display = "flex"; // show food selection section
-    cartSelection.style.display = "none"; // hide cart selection section    
+    foodSelection.style.display = ""; // let Tailwind grid handle layout
+    cartSelection.style.display = "none"; // hide cart selection section
 }
 function showCartSelection(){
     foodSelection.style.display = "none"; // hide food selection section
-    cartSelection.style.display = "flex"; // show cart selection section
+    cartSelection.style.display = ""; // let Tailwind handle layout
 }
 
 let FOOD_URL = "https://www.themealdb.com/api/json/v1/1/search.php?s=c"
@@ -44,16 +45,16 @@ function displayFood(meals){
     //console.log(price)
     //price = price + 10; // increase price by 10 for each food item
     foodSelection.innerHTML +=`
-        <div class="bg-white p-4 rounded-lg shadow-md">
-        <img src="${meal.strMealThumb}" alt="${meal.strMeal}" width="200" height="200"
-        class="h-20 w-full object-cover rounded-lg"
-        />
-        <h3 class="text-lg font-semibold">${meal.strMeal}</h3>
-        <p class="text-gray-800 text-sm">Price: $${price}</p>
-        <input type="button" value = "Add To Cart"
-        onclick="addToCart(${meal.idMeal},'${meal.strMeal}',${price})"
-        class="bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-colors duration-300 cursor-pointer"
-        />
+        <div class="bg-white p-4 rounded-lg shadow-md flex flex-col items-center">
+            <div class="w-full aspect-square mb-2 overflow-hidden flex items-center justify-center">
+                <img src="${meal.strMealThumb}" alt="${meal.strMeal}"
+                    class="object-cover w-full h-full rounded-lg max-h-48" />
+            </div>
+            <h3 class="text-lg font-semibold text-center">${meal.strMeal}</h3>
+            <p class="text-gray-800 text-sm text-center">Price: $${price}</p>
+            <input type="button" value = "Add To Cart"
+                onclick="addToCart(${meal.idMeal},'${meal.strMeal}',${price})"
+                class="bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-colors duration-300 cursor-pointer w-full mt-2" />
         </div>
     `
    
@@ -80,26 +81,39 @@ function addToCart(mealId, mealName, price){
 function updateCart() {
     let cartItem = document.getElementById("cartItem");
     cartItem.innerHTML = ""; // clear previous cart items before displaying updated cart items
-    
-    cart.forEach(item=> {
+
+    let total = 0;
+    cart.forEach(item => {
         cartItem.innerHTML += `
-            <h3>${item.mealName}</h3>
-            <p>Price: $${item.price}</p>
-            <p>Quantity: ${item.quantity}</p>
-            <input type="button" value="+" onClick="changeQuantity(${item.mealId}, 1)"/>
-            <input type="button" value="-" onClick="changeQuantity(${item.mealId}, -1)"/>
-        `
-    })
+            <div class="bg-gray-100 rounded-lg shadow p-4 mb-4 flex flex-col md:flex-row md:items-center md:justify-between">
+                <div>
+                    <h3 class="text-lg font-semibold mb-1">${item.mealName}</h3>
+                    <p class="text-gray-700 mb-1">Price: <span class="font-medium">$${item.price}</span></p>
+                    <p class="text-gray-700 mb-2">Quantity: <span class="font-medium">${item.quantity}</span></p>
+                </div>
+                <div class="flex space-x-2 mt-2 md:mt-0">
+                    <input type="button" value="+" onClick="changeQuantity(${item.mealId}, 1)"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded cursor-pointer"/>
+                    <input type="button" value="-" onClick="changeQuantity(${item.mealId}, -1)"
+                        class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded cursor-pointer"/>
+                </div>
+            </div>
+        `;
+        total += item.price * item.quantity;
+    });
+    if(cart.length > 0) {
+        cartItem.innerHTML += `<div class="text-right mt-4"><h3 class="text-xl font-bold">Total Amount: <span class="text-green-600">$${total}</span></h3></div>`;
+    }
 }
 
 // as of now working with only item 
 function changeQuantity(mealId, change){
-    cart = cart.map(item =>{
+    cart = cart.map(item => {
         if(item.mealId === mealId){
             item.quantity += change; // change quantity by adding change value (can be positive or negative)
-            return item;
         }
-    }).filter(item=> item.quantity > 0); // remove item from cart if quantity is less than or equal to 0  
+       return item;
+    }).filter(item => item.quantity > 0); // remove item from cart if quantity is less than or equal to 0  
 
     updateCart(); // update cart section in dashboard page after changing quantity
 }
