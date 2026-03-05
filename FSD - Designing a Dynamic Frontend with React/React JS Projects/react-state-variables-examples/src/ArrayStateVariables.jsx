@@ -1,15 +1,12 @@
 import { useState } from "react";
-
 function ArrayStateVariables() {
-let [names,setNames]=useState(["John","Doe","Smith","Bob","Alice","Charlie"]); // type of array variable which hold more values of string type
-
+let [names]=useState(["John","Doe","Smith","Bob","Alice","Charlie"]); // type of array variable which hold more values of string type
     return(
         <div>
             <h2>Array State Variables</h2>
             <p>Names is {names} output as whole string format</p>
             <p>Names is {names.join(", ")} separated by , operator</p>
             <p>Names is {names[0]} first element of array</p>
-            
             <hr/>
             <h2>All Student names</h2>
             {
