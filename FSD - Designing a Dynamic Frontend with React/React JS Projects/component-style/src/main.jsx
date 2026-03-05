@@ -8,7 +8,3 @@ createRoot(document.getElementById('root')).render(
     <App />
   </StrictMode>,
 )
-
-
-// main.jsx provide a bridge between 
-// actual DOM and Virtual DOM. 
