@@ -1,6 +1,6 @@
 import { useState } from "react";
 function ArrayStateVariables() {
-let [names]=useState(["John","Doe","Smith","Bob","Alice","Charlie"]); // type of array variable which hold more values of string type
+let [names]=useState(["John","Doe","Smith","Bob","Alice","Charlie","John"]); // type of array variable which hold more values of string type
     return(
         <div>
             <h2>Array State Variables</h2>
@@ -10,17 +10,17 @@ let [names]=useState(["John","Doe","Smith","Bob","Alice","Charlie"]); // type of
             <hr/>
             <h2>All Student names new paragraph</h2>
             {
-                names.map(value=><p>{value}</p>)
+                names.map((value,index)=><p key={index}>{value}</p>)
             }
             <hr/>
             <h3>All Student names in un order list format</h3>
             <ul>
-                {names.map(name=><li>{name}</li>)}
+                {names.map((name,index)=><li key={index}>{name}</li>)}
             </ul>
                         <hr/>
             <h3>All Student names in order list format</h3>
             <ol>
-                {names.map(name=><li>{name}</li>)}
+                {names.map((name,index)=><li key={index}>{name}</li>)}
             </ol>
         </div>
     )
