@@ -8,7 +8,7 @@ let [names]=useState(["John","Doe","Smith","Bob","Alice","Charlie"]); // type of
             <p>Names is {names.join(", ")} separated by , operator</p>
             <p>Names is {names[0]} first element of array</p>
             <hr/>
-            <h2>All Student names</h2>
+            <h2>All Student names new paragraph</h2>
             {
                 names.map(value=><p>{value}</p>)
             }
