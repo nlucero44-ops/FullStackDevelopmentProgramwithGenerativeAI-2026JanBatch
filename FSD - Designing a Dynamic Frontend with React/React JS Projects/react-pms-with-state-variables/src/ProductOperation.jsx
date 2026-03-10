@@ -6,7 +6,16 @@ let storeProduct = (event)=> {
     console.log("Event fired");
     event.preventDefault();     // disable action default behaviour 
     console.log(product)
-    setProducts([...products,product]); 
+    // find if record not present it return undefined else it return that record. 
+    let isPresent = products.find(p=>p.pid==product.pid);
+    
+    if(isPresent==undefined){
+        setProducts([...products,product]); 
+    alert("Product added successfully")
+    }else {
+        alert("Product id must be unique")
+    }
+
     setProduct({pid:"",pname:"",price:"",url:""})
 }
     return(
