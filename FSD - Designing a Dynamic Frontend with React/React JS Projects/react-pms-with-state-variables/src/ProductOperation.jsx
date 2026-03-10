@@ -6,9 +6,14 @@ let storeProduct = (event)=> {
     console.log("Event fired");
     event.preventDefault();     // disable action default behaviour 
     console.log(product)
+    
+    if(product.pid=="" || product.pname=="" || product.price=="" || product.url==""){
+        alert("Please enter all field")
+        return;
+    }
+    
     // find if record not present it return undefined else it return that record. 
     let isPresent = products.find(p=>p.pid==product.pid);
-    
     if(isPresent==undefined){
         setProducts([...products,product]); 
     alert("Product added successfully")
@@ -17,6 +22,14 @@ let storeProduct = (event)=> {
     }
 
     setProduct({pid:"",pname:"",price:"",url:""})
+}
+
+let deleteProduct = (pid)=> {
+    //alert("product id "+pid)
+    // it create new array with condition inside filter. 
+    let filterProducts = products.filter(p=>p.pid!=pid);
+    setProducts(filterProducts);    // update new product in products state variable. 
+    alert("product deleted successfully")
 }
     return(
         <div>
@@ -53,6 +66,7 @@ let storeProduct = (event)=> {
                         <th>PName</th>
                         <th>Price</th>
                         <th>Image</th>
+                        <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -63,6 +77,9 @@ let storeProduct = (event)=> {
                             <td>{product.pname}</td>
                             <td>{product.price}</td>
                             <td><img src={product.url} width="50px" height="50px"/></td>
+                            <td>
+                            <input type="button" value="Delete"onClick={()=>deleteProduct(product.pid)}/>
+                            </td>
                         </tr>
                         )
                     }
