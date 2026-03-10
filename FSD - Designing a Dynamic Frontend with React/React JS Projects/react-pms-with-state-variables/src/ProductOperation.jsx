@@ -3,6 +3,7 @@ function ProductOperation() {
 const [products,setProducts]=useState([]);  // array of product object  
 const [product,setProduct]=useState({pid:"",pname:"",price:"",url:""}) // product object 
 const [buttonMsg,setButtonMsg]=useState("Add Product");
+const [idFlag,setIdFlag]=useState(false);
 
 let storeOrUpdateProduct = (event)=> {
     console.log("Event fired");
@@ -25,12 +26,13 @@ let storeOrUpdateProduct = (event)=> {
                 }else {
                 alert("Product id must be unique")
                 }
-                
+
 
         }else {
 
                 alert("Ready to update")
                 setButtonMsg("Add Product");
+                setIdFlag(false);
         }
 
 
@@ -50,6 +52,7 @@ let setToUpdateProduct = (updateProduct)=> {
     setProduct(updateProduct);  // set updateProduct value to product state variable 
     // using value we display old value in form. 
     setButtonMsg("Update Product");
+    setIdFlag(true)
 }
     return(
         <div>
@@ -57,7 +60,8 @@ let setToUpdateProduct = (updateProduct)=> {
             <form onSubmit={storeOrUpdateProduct}>
                 <input type="text" name="pid" value={product.pid}
                 placeholder="Enter the Product id" 
-                onChange={(event)=>setProduct({...product,pid:event.target.value})}/>
+                onChange={(event)=>setProduct({...product,pid:event.target.value})}
+                readOnly={idFlag}/>
                 <br/>
 
                 <input type="text" name="pname" value={product.pname}
