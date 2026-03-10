@@ -30,7 +30,16 @@ let storeOrUpdateProduct = (event)=> {
 
         }else {
 
-                alert("Ready to update")
+                //alert("Ready to update")
+                let productIndex = products.findIndex(p=>p.pid == product.pid);
+                let tempProducts = products.slice();    // copy all products into tempProducts  
+                tempProducts[productIndex].pname=product.pname
+                tempProducts[productIndex].price=product.price
+                tempProducts[productIndex].url=product.url
+
+                setProducts(tempProducts);  // update new change of that particular product 
+
+                //alert(productIndex);
                 setButtonMsg("Add Product");
                 setIdFlag(false);
         }
