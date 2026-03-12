@@ -1,122 +1,200 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-export const URL="http://localhost:3000/products";
+import "./ProductOperations.css";
+
+export const URL = "http://localhost:3000/products";
 
 function ProductOperation(){
 
-let [products,setProducts]=useState([]);
-let [error,setError]=useState("")
-let [product,setProduct]=useState({pname:"",price:"",qty:""});
-let [msg,setMessage]=useState("");
+    let [products,setProducts] = useState([]);
+    let [error,setError] = useState("");
+    let [product,setProduct] = useState({pname:"",price:"",qty:""});
+    let [msg,setMessage] = useState("");
+    let [buttonValue,setButtonValue] = useState("Add Product");
 
-// 1st option without dependencies  it call first time and again whenever re-render it call again and again. 
-// useEffect(()=> 
-//     console.log("useEffect get called. ")
-// );
+    // useEffect called whenever msg changes
+    useEffect(()=>{
+        loadProductsDetailsES6Style();
+    },[msg])
 
-//2nd option with empty array dependencies it call only once when component loaded..
-// useEffect(()=> {
-//      console.log("useEffect get called only once ")
-// },[])
-
-// 3rd option with dependencies as a state variable 
-useEffect(()=> {
-console.log("useEffect get called and whenever any changes in msg variable it get called.")
-loadProductsDetailsES6Style();
-},[msg])
-
-// ES5 style 
-let loadProductsDetailsES5Style = ()=> {
-    // using fetch function 
-    //fetch(URL).then(response=>response.json()).then(result=>console.log(result)).catch(error=>console.log(error)) 
-    // using axios 
-    //axios.get(URL).then(result=>console.log(result.data)).catch(error=>console.log(error))
-    axios.get(URL).then(result=>setProducts(result.data)).catch(error=>setError(error.message))
-}
-// ES6 style 
-let loadProductsDetailsES6Style = async ()=> {
-    // using fetch function 
-    //fetch(URL).then(response=>response.json()).then(result=>console.log(result)).catch(error=>console.log(error)) 
-    // using axios 
-    //axios.get(URL).then(result=>console.log(result.data)).catch(error=>console.log(error))
-    //axios.get(URL).then(result=>setProducts(result.data)).catch(error=>setError(error.message))
-    try{
-    let result = await axios.get(URL);  // await keyword make statement as synchronous await is replacement of then 
-    setProducts(result.data);
-    }catch(error){
-        setError(error.message);
+    // Load product details
+    let loadProductsDetailsES6Style = async () =>{
+        try{
+            let result = await axios.get(URL);
+            setProducts(result.data);
+        }catch(error){
+            setError(error.message);
+        }
     }
-}
-let storeProduct = async (event)=> {
-    event.preventDefault();
-    setMessage("");         // reset 
-    console.log(product)
-    try{
-    let result = await axios.post(URL,product);     // store the data in json server 
-    //console.log(result);    // it return stored data with id 
-    setMessage(result.statusText);      // once record store in json file i set the message. 
-    }catch(error){
-        setError(error.message)
-    }
-    setProduct({pname:"",price:"",qty:""});
-}
 
-let deleteProduct = async (pid)=> {
-    setMessage(""); // reset
-    let result = await axios.delete(URL+"/"+pid);   // appending id through URL 
-    setMessage(result.statusText);
-}
+    // Add or Update product
+    let storeOrUpdateProduct = async (event)=>{
+        event.preventDefault();
+        setMessage("");
+
+        try{
+
+            if(buttonValue === "Add Product"){
+
+                let result = await axios.post(URL,product);
+                setMessage(result.statusText);
+
+            }else{
+
+                let result = await axios.put(URL+"/"+product.id,product);
+                setMessage(result.statusText);
+                setButtonValue("Add Product");
+
+            }
+
+        }catch(error){
+            setError(error.message);
+        }
+
+        setProduct({pname:"",price:"",qty:""});
+    }
+
+    // Delete product
+    let deleteProduct = async (pid)=>{
+
+        setMessage("");
+
+        let result = await axios.delete(URL+"/"+pid);
+
+        setMessage(result.statusText);
+    }
+
+    // Set product for update
+    let setToUpdate = (updateProduct)=>{
+
+        setProduct(updateProduct);
+
+        setButtonValue("Update Product");
+
+    }
+
     return(
-        <div>
-            <span style={{color:"red"}}>{msg}</span>
-            <h2>Product Operation with Rest API using Axios</h2>
-            <form onSubmit={storeProduct}>
-                <input type="text" name="pname" value={product.pname}
-                placeholder="Enter the Product Name"
-                onChange={(event)=>setProduct({...product,"pname":event.target.value})}/>
-                
-                <input type="text" name="price" value={product.price}
-                placeholder="Enter the Product Price"
-                onChange={(event)=>setProduct({...product,"price":event.target.value})}/>
 
-                <input type="text" name="qty" value={product.qty}
-                placeholder="Enter the Product Qty"
-                onChange={(event)=>setProduct({...product,"qty":event.target.value})}/><br/>
+        <div className="container">
 
-                <input type="submit" value="Store Product"/>
-                </form>
-            <p>Number of product are </p>
-            <table border="1">
+            <span className="message">{msg}</span>
+            <span className="error">{error}</span>
+
+            <h2 className="heading">
+                Product Operation with Rest API using Axios
+            </h2>
+
+            <form onSubmit={storeOrUpdateProduct} className="product-form">
+
+                <input
+                type="text"
+                name="pname"
+                className="input-field"
+                value={product.pname}
+                placeholder="Enter Product Name"
+                onChange={(event)=>
+                    setProduct({...product,pname:event.target.value})
+                }
+                />
+
+                <input
+                type="text"
+                name="price"
+                className="input-field"
+                value={product.price}
+                placeholder="Enter Product Price"
+                onChange={(event)=>
+                    setProduct({...product,price:event.target.value})
+                }
+                />
+
+                <input
+                type="text"
+                name="qty"
+                className="input-field"
+                value={product.qty}
+                placeholder="Enter Product Quantity"
+                onChange={(event)=>
+                    setProduct({...product,qty:event.target.value})
+                }
+                />
+
+                <input
+                type="submit"
+                value={buttonValue}
+                className="submit-btn"
+                />
+
+            </form>
+
+            <p className="product-count">
+                Number of products are {products.length}
+            </p>
+
+            <table className="product-table">
+
                 <thead>
+
                     <tr>
+
                         <th>PId</th>
                         <th>PName</th>
                         <th>Price</th>
                         <th>Qty</th>
                         <th>Delete</th>
+                        <th>Update</th>
+
                     </tr>
+
                 </thead>
+
                 <tbody>
+
                     {
                         products.map(product=>
+
                             <tr key={product.id}>
-                                    <td>{product.id}</td>
-                                    <td>{product.pname}</td>
-                                    <td>{product.price}</td>
-                                    <td>{product.qty}</td>
-                                    <td>
-                                        <input type="button"
-                                        value="Delete"
-                                        onClick={()=>deleteProduct(product.id)}/>
-                                    </td>
+
+                                <td>{product.id}</td>
+                                <td>{product.pname}</td>
+                                <td>{product.price}</td>
+                                <td>{product.qty}</td>
+
+                                <td>
+
+                                    <input
+                                    type="button"
+                                    value="Delete"
+                                    className="delete-btn"
+                                    onClick={()=>deleteProduct(product.id)}
+                                    />
+
+                                </td>
+
+                                <td>
+
+                                    <input
+                                    type="button"
+                                    value="Update"
+                                    className="update-btn"
+                                    onClick={()=>setToUpdate(product)}
+                                    />
+
+                                </td>
+
                             </tr>
+
                         )
                     }
+
                 </tbody>
+
             </table>
-          
+
         </div>
+
     )
+
 }
 
 export default ProductOperation;
