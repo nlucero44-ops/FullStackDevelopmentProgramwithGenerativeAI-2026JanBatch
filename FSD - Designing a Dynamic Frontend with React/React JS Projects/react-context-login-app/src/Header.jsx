@@ -7,6 +7,7 @@ let obj = useContext(AuthContext)
     return(
         <div>
             <h2>{obj.msg}</h2>
+           
         </div>
     )
 }

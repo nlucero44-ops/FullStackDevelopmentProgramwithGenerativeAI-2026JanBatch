@@ -6,15 +6,14 @@ import Login from "./Login"
 
 function App() {
 const [msg,setMsg]=useState("Welcome to React JS Context API")
-const [user,setUser]=useState({emailId:"",password:""});
-
+const [user,setUser]=useState(null);
   let login = (user)=> {
         setUser(user);
    }
-   
    let logout = () => {
-    setUser({emailId:"",password:""})
+    setUser(null)
    }
+
   return (
     <>
   <AuthContext.Provider value={{msg,user,login,logout}}>
